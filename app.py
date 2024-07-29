@@ -1,4 +1,5 @@
 from flask import Flask, send_from_directory, render_template_string
+from threading import Thread
 
 app = Flask(__name__, static_url_path='', static_folder='static')
 
@@ -11,5 +12,9 @@ def index():
 def static_files(path):
     return send_from_directory('.', path)
 
+def run():
+    app.run(host='0.0.0.0', port=8080)
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+    server = Thread(target=run)
+    server.start()
